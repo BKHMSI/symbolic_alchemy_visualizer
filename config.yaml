@@ -1,0 +1,53 @@
+run-title: A2C_5_3
+device: cpu
+dt: 0.01
+seed: 42
+n-seeds: 1
+start-seed: 0
+load-path: ../alchemist/ckpts/A2C_5_3/A2C_5_3_33500.pt
+save-path: ./ckpts
+log-path: logs
+data-path: ./trajectories
+save-interval: 1000
+resume: false
+start-episode: 0 #26_000
+optimizer: adam
+test: false
+test-ensemble: false 
+load-paths:
+  - ./ckpts/A2C_IO_MEM_1_1/A2C_IO_MEM_1_1_21000.pt
+  - ./ckpts/A2C_IO_MEM_1_2/A2C_IO_MEM_1_2_15000.pt
+
+agent:
+  lr: 7.5e-4
+  gamma: .70
+  value-loss-weight: 0.5
+  entropy-weight: 0.1
+  n-step-update: 20
+
+  grad-clip-norm: 100
+
+  obs-dim: 21
+  hidden-dim: 256
+  encoder: [32, 32]
+
+  attn-num-iter: 1
+  attn-num-heads: 4
+  attn-dim: 64
+
+  mem-size: 150
+  memory-dim: 1
+
+  n-workers: 1
+
+task:
+  n-episodes: 500_000
+  n-actions: 22 #40 #22 #7 #21
+  n-potions: 8 #5 #8
+  n-rewards: 1
+
+data:
+  batch-size: 256
+
+train:
+  epochs: 100
